@@ -1,30 +1,35 @@
-import * as fs from "fs";
-import * as patch from "path";
+import * as fs from 'fs';
+import * as path from 'path';
 
-function printPath (pathDir:"string") : void {
+function printPath(dirPath: string, tab: string = ''): void {
+    try {
+        if (!fs.existsSync(dirPath)) {
+            console.log(`Directory does not exist!`);
+            return;
+        }
 
-   try {
-    const files = fs.readFileSync(pathDir);
-    console.log(files)
-
-    for (const file of files) {
-
-        const itemPath = path.join(dirpath, item);
-        const stats= fs.statSync(itemPath)
-    }
-
-    if(stats.isdirectory()) {e
-        console.log(`"    " ${stats}` )
-        printPath(itemPath)
-    }else{
-       if(stats.isFile() )
-        console.log(`"    " ${itemPath}`)
+        const items = fs.readdirSync(dirPath);
       
+        items.forEach(item => {
+            const fullPath = path.join(dirPath, item);
+            const stats = fs.statSync(fullPath);
+
+            if (stats.isDirectory()) {
+                console.log(`${tab} ${item}`);
+                
+                printPath(fullPath, tab + '  ');
+            } else if (stats.isFile()) {
+                console.log(`${tab} ${item}`);
+            }
+        });
+    } catch (err) {
+        console.log(`Error reading directory ${dirPath}:`, err.message);
     }
-} catch(err) {
-    console.log (err.message)
-}
 }
 
+printPath('C:\\Users\\Admin\\Desktop\\abcd'); 
+///
 
- printPath()
+
+
+
