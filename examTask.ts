@@ -28,7 +28,7 @@ function printPath(dirPath: string, tab: string = ''): void {
 }
 
 printPath('C:\\Users\\Admin\\Desktop\\abcd'); 
-//sds 
+
 
 
 
